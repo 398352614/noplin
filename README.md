@@ -1,4 +1,5 @@
 # noplin
+![logo](./admin-noplin/src/assets/logo.png)
 
 [comment]: <> (![Version]&#40;https://img.shields.io/github/v/tag/398352614/noplin&#41;)
 

@@ -1,23 +1,19 @@
-<script setup>
+<script lang="ts" setup>
 import Login from './Login.vue';
-import ChangeLanguage from './ChangeLanguage.vue';
-
-</script>
+import ChangeLanguage from './ChangeLanguage.vue';</script>
 
 <template>
   <div class="auth-layout">
     <el-container>
       <el-aside>
-          <img src="@/assets/logo.png" class="img-box"  alt="noplin"/>
+        <img alt="noplin" class="img-box" src="@/assets/logo.png"/>
       </el-aside>
-      <el-container>
-        <el-main>
-          <Login />
-        </el-main>
-        <el-footer>
-          <ChangeLanguage />
-        </el-footer>
-      </el-container>
+      <el-main>
+        <Login/>
+      </el-main>
+      <el-footer>
+        <ChangeLanguage/>
+      </el-footer>
     </el-container>
   </div>
 </template>
@@ -26,14 +22,14 @@ import ChangeLanguage from './ChangeLanguage.vue';
 .el-aside {
   width: 50vw;
   height: 100vh;
-  background-color: gray;
+  background-color: var(--el-color-primary);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .img-box {
-  display:table-cell;
+  display: table-cell;
 }
 
 .el-main {
@@ -45,7 +41,7 @@ import ChangeLanguage from './ChangeLanguage.vue';
 .el-footer {
   width: 50vw;
   height: 10vh;
-  opacity: 0.5;
+  /*opacity: 0.5;*/
   display: flex;
   align-items: center;
 }
