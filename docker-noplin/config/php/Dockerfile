@@ -48,7 +48,7 @@ RUN pecl install -o -f redis \
 
 
 RUN chown -R www-data:www-data /var/www
-WORKDIR /var/www/html/api
+WORKDIR /var/www/html/api-noplin
 
 #composer安装
 RUN wget https://mirrors.aliyun.com/composer/composer.phar -O /usr/bin/composer \

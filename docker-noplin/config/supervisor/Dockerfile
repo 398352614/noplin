@@ -60,4 +60,4 @@ RUN chmod +x /usr/bin/composer
 COPY ./config/supervisor/mysqldump /usr/bin/mysqldump
 
 RUN chown -R www-data:www-data /var/www
-WORKDIR /var/www/html/api
+WORKDIR /var/www/html/api-noplin

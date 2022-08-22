@@ -33,7 +33,7 @@ import {login} from "@/api/auth";
 import {validUsername} from "@/utils/validator";
 import {tokenStore} from "@/stores/token-store";
 import {FormInstance} from "element-plus";
-import router from "@/router";
+import router from "@/router/index";
 
 // 响应式状态
 const loginFormRef = ref<FormInstance>()
