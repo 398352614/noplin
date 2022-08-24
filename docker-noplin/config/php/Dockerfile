@@ -1,4 +1,4 @@
-FROM php:8.1.0
+FROM php:8.1.0RC4-fpm-buster
 
 COPY ./config/php/sources.list.buster /etc/apt/sources.list
 

@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
+//定义artisan命令，但只能是闭包
+
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');

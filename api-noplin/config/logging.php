@@ -53,14 +53,16 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['daily', 'syslog'],
             'ignore_exceptions' => false,
         ],
+
 
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
+            'permission' => 0666,
         ],
 
         'daily' => [
@@ -68,6 +70,7 @@ return [
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
             'days' => 14,
+            'permission' => 0666,
         ],
 
         'slack' => [
@@ -117,6 +120,44 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+        'business' => [
+            'driver' => 'stack',
+            'channels' => ['business_only', 'daily'],
+            'ignore_exceptions' => false,
+        ],
+        'business_only' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/business/business.log'),
+            'level' => 'info',
+            'days' => 14,
+            'permission' => 0666,
+        ],
+        'api' => [
+            'driver' => 'stack',
+            'channels' => ['api_only', 'daily'],
+            'ignore_exceptions' => false,
+        ],
+        'api_only' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/api/api.log'),
+            'level' => 'info',
+            'days' => 14,
+            'permission' => 0666,
+        ],
+        [
+            'websocket' => [
+                'driver' => 'stack',
+                'channels' => ['websocket_only', 'daily'],
+                'ignore_exceptions' => false,
+            ],
+            'websocket_only' => [
+                'driver' => 'daily',
+                'path' => storage_path('logs/websocket/websocket.log'),
+                'level' => 'info',
+                'days' => 14,
+                'permission' => 0666,
+            ]
+        ]
     ],
 
 ];

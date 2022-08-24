@@ -1,5 +1,5 @@
 #!/bin/bash
-source ./.env
+source /mysql/.env
 mysql -uroot -p${MYSQL_PASSWORD} -e "use mysql;
 update user set host='%' where user='root';
 flush privileges;
