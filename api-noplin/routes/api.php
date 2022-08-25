@@ -20,7 +20,7 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
     Route::post('/login', 'login')->name('auth.login');;//登录
     Route::post('/logout', 'logout')->name('auth.login');;//登录
     Route::post('/register', 'register')->name('auth.register');;//注册
-    Route::get('/register', 'registerCode')->name('auth.register');;//注册发码
+    Route::get('/register', 'getRegisterCode')->name('auth.register');;//注册发码
     Route::put('/reset', 'reset')->name('auth.reset');;//重置密码
     Route::get('/reset', 'getResetCode')->name('auth.reset');;//重置密码发码
 });

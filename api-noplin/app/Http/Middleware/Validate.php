@@ -35,12 +35,11 @@ class Validate
         $action = $request->route()->getAction();
         try {
             //替换命名空间
-            $baseNamespace = str_replace('App\\Http\\Controllers', self::$baseNamespace, $action['namespace']);
             list($controller, $method) = explode('@', $action['controller']);
             //将控制器替换成验证类
             $controllerName = str_replace('Controller', 'Validation', substr($controller, (strrpos($controller, '\\') + 1)));
             //合成验证类
-            $validateClass = $baseNamespace . '\\' . $controllerName;
+            $validateClass = self::$baseNamespace . '\\' . $controllerName;
             //若不存在验证规则和场景,则不验证
             if (!class_exists($validateClass) || !property_exists($validateClass, 'rules') || !property_exists($validateClass, 'scene')) {
                 return $next($request);

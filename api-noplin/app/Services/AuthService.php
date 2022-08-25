@@ -56,8 +56,7 @@ class AuthService extends BaseService
             auth('admin')->logout();
             throw new BusinessException('暂时无法登录，请联系管理员！');
         }
-        $station = $this->cacheStation($user);
-        return $this->respondWithToken($token, $station);
+        return $this->respondWithToken($token);
     }
 
     /**
@@ -154,67 +153,28 @@ class AuthService extends BaseService
     #[ArrayShape(['username' => "mixed", 'station_id' => "mixed", 'access_token' => "", 'token_type' => "string", 'expires_in' => "float|int", 'station' => "", 'unit' => "\Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|mixed"])]
     public function register($params): array
     {
-//        $this->verifyCode($params, 'REGISTER');
-
+        $this->verifyCode($params);
         if (parent::getList()->isEmpty()) {
-            $station = $this->init($params);
+            $this->init($params);
         } else {
             throw new BusinessException('无注册权限');
         }
         //删除验证码
-//        $this->deleteVerifyCode($params['username']);
-        return $this->respondWithToken($this->getToken($params), $station);
+        $this->deleteVerifyCode($params['username']);
+        return $this->respondWithToken($this->getToken($params));
     }
 
     /**
      * @param $params
-     * @return array
-     * @throws BusinessException|BindingResolutionException
+     * @return void
      */
-    #[ArrayShape(["name" => "string", "status" => "string", "day_list" => "string", "notice_quantity" => "string", "notice_duration" => "string", "country" => "string", "master" => "array", "line_list" => "array[]", 'id' => "\Illuminate\Database\Eloquent\Model|int"])]
-    public function init($params): array
+    public function init($params): void
     {
-        $this->countryService()->create($this->countryService()->getDetail('NL'));
-        $this->priceService()->store([
-            'name' => "方案一",
-            'type' => 1,
-            'weight_price_list' => [
-                [
-                    'start' => 0,
-                    'end' => 999999999,
-                    'amount' => 1
-                ],
-            ]]);
-        $data = [
-            "name" => "总门店",
-            "status" => "1",
-            "day_list" => "0,1,2,3,4,5,6",
-            "notice_quantity" => "10",
-            "notice_duration" => "86400",
-            "country" => "NL",
-            "master" => [
-                "name" => "NLE",
-                "phone" => "123",
-                "email" => $params['username'],
-                "password" => $params['password'],
-                "type" => 1,
-                "address" => [
-                    "country" => "NL",
-                    "city" => "Nieuw-Vennep",
-                    "street" => "Pesetaweg",
-                    "postcode" => "2153PJ",
-                    "house_number" => "20"
-                ]
-            ],
-            "line_list" => [
-                [
-                    "price_id" => 1,
-                    "country" => "NL"
-                ],
-            ],
-        ];
-        $data['id'] = $this->stationService()->store($data, true);
-        return $data;
+           parent::create([
+               'username'=>$params['username'],
+               'password' => bcrypt($params['password']),
+               'type'=>Constant::USER_TYPE_1
+           ]);
     }
 
     /**
@@ -299,6 +259,17 @@ class AuthService extends BaseService
             throw new BusinessException('该邮箱未注册，请联系管理员');
         }
         return $this->sendCode($data['username'], Constant::RESET);
+    }
+
+    /**
+     * 注册发码
+     * @param $data
+     * @return array
+     * @throws BusinessException
+     */
+    public function getRegisterCode($data):array
+    {
+        return $this->sendCode($data['username']);
     }
 
     /**

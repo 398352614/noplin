@@ -11,11 +11,12 @@ class User extends Auth implements JWTSubject
     protected $table = 'user';
 
     protected $fillable = [
-        'email',
+        'username',
         'password',
         'type',
         'status',
-        'avatar_id'
+        'name',
+        'avatar'
     ];
 
     protected $hidden = [

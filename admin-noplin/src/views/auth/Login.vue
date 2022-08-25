@@ -16,8 +16,8 @@
           </el-input>
         </el-form-item>
         <el-form-item>
-          <el-button class="button" type="success" @keyup.enter.native="handleLogin(loginFormRef)"
-                     @click.native="handleLogin(loginFormRef)" :loading="loading">
+          <el-button :loading="loading" class="button" type="success"
+                     @keyup.enter.native="handleLogin(loginFormRef)" @click.native="handleLogin(loginFormRef)">
             登录
           </el-button>
         </el-form-item>
@@ -41,7 +41,7 @@ const loginForm = reactive({
   username: "",
   password: ""
 })
-const loading=ref(false)
+const loading = ref(false)
 
 //验证用户名
 const validateUsername = (rule: any, value: any, callback: any) => {

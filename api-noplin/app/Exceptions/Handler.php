@@ -55,7 +55,6 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            dd($e);
             Mail::to(config('project.root.email'))->send(new SendException($e));
         });
     }

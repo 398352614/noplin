@@ -64,6 +64,16 @@ class AuthController extends BaseController
     }
 
     /**
+     * 重置发码
+     * @return array
+     * @throws BusinessException
+     */
+    public function getRegisterCode(): array
+    {
+        return $this->service->getRegisterCode($this->data);
+    }
+
+    /**
      * 登出
      * @return void
      */
