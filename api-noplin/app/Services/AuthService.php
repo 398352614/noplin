@@ -8,6 +8,7 @@ use App\Constants\Constant;
 use App\Exceptions\BusinessException;
 use App\Manager\Mail\SendRegisterCode;
 use App\Manager\Mail\SendResetCode;
+use App\Models\Card;
 use App\Models\User;
 use App\Resources\AuthResource;
 use App\Services\BaseService;

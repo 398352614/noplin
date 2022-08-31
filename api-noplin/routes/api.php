@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CardController;
 use App\Http\Controllers\CommonController;
+use App\Http\Controllers\FieldController;
+use App\Http\Controllers\FileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,11 +52,29 @@ Route::middleware(['auth:admin', 'permission'])->group(function () {
 
     //文件管理
     Route::prefix('file')->controller(FileController::class)->group(function () {
-        Route::get('', 'index')->name('file.index');//查看
+        Route::get('', 'index')->name('file.index');//查询
         Route::get('/{id}', 'show')->name('file.show');//查看
-        Route::post('', 'store')->name('file.store');//查看
+        Route::post('', 'store')->name('file.store');//新增
         Route::put('/{id}', 'edit')->name('file.edit');//修改
         Route::delete('/{id}', 'destroy')->name('file.destroy');//删除
+    });
+
+    //卡片管理
+    Route::prefix('card')->controller(CardController::class)->group(function () {
+        Route::get('', 'index')->name('card.index');//查询
+        Route::get('/{id}', 'show')->name('card.show');//查看
+        Route::post('', 'store')->name('card.store');//新增
+        Route::put('/{id}', 'edit')->name('card.edit');//修改
+        Route::delete('/{id}', 'destroy')->name('card.destroy');//删除
+    });
+
+    //字段管理
+    Route::prefix('field')->controller(FieldController::class)->group(function () {
+        Route::get('', 'index')->name('card.index');//查询
+        Route::get('/{id}', 'show')->name('card.show');//查看
+        Route::post('', 'store')->name('card.store');//新增
+        Route::put('/{id}', 'edit')->name('card.edit');//修改
+        Route::delete('/{id}', 'destroy')->name('card.destroy');//删除
     });
 
 });

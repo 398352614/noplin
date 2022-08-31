@@ -1,9 +1,8 @@
 <?php
 return [
     'root' => [
-        'username' => env('ROOT_USERNAME'),
-        'password' => env('ROOT_PASSWORD'),
-        'email' => env('ROOT_EMAIL'),
+        'username' => env('ROOT_USERNAME') ?? env('MAIL_USERNAME'),
+        'password' => env('ROOT_PASSWORD') ?? '123456',
     ],
     'number' => [
         'prefix' => env('NUMBER_PREFIX') ?? config('app.name'),

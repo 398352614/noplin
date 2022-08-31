@@ -59,4 +59,15 @@ class Constant
 
     const ENGLISH = 'en';
     const CHINESE = 'cn';
+
+    const LEVEL_SYSTEM = 1;
+    const LEVEL_CUSTOM = 2;
+
+    const TEXT = 1;
+    const NUMBER = 2;
+    const SELECT = 3;
+    const DATETIME = 4;
+    const LINK = 5;
+    const IMAGE = 5;
+
 }

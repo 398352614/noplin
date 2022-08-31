@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('user_id')->index()->comment('用户ID');
             $table->integer('parent_id')->index()->comment('父卡片');
             $table->integer('sort_id')->comment('顺序');
-            $table->tinyInteger('level')->index()->comment('等级1-系统级2-自定义级');
+            $table->tinyInteger('level')->index()->comment('等级1-自定义级2-系统级');
             $table->string('name')->default('')->comment('名字');
             $table->text('body')->nullable()->comment('正文');
             $table->string('logo')->default('')->comment('标志');
