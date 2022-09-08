@@ -2,7 +2,7 @@ import {defineStore} from 'pinia'
 
 const key = "token";
 
-export const tokenStore = defineStore('token', {
+export const tokenStore = defineStore(key, {
     state: () => (
         {
             "token": ""
@@ -10,19 +10,15 @@ export const tokenStore = defineStore('token', {
     ),
     actions: {
         get(): string {
-            return localStorage.getItem(key) || sessionStorage.getItem(key) || '';
+            return this.token || localStorage.getItem(key) || '';
         },
         set(value: string, keep: boolean = false): void {
-            keep ? localStorage.setItem(key, value) : sessionStorage.setItem(key, value);
+            this.token = value;
+            keep && localStorage.setItem(key, value);
         },
         remove(): void {
+            this.token = "";
             localStorage.removeItem(key);
-            sessionStorage.removeItem(key);
-        }
-    },
-    getters: {
-        header(): string {
-            return 'Bearer ' + this.token;
         }
     }
 })

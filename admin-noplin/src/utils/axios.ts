@@ -1,8 +1,8 @@
 import axios from "axios";
 import {ElMessage} from "element-plus";
 import router from "@/router/index";
-import {AxiosApi} from '@/interface/axios-interface'
 import {tokenStore} from "@/stores/token-store";
+import {configStore} from "@/stores/config-store";
 
 let baseApi: string;
 switch (location.hostname) {
@@ -32,22 +32,13 @@ export function options() {
 }
 
 //请求拦截器
-request.interceptors.request.use((config) => {
-    return config;
-});
+request.interceptors.request.use(withToken);
 
 //返回拦截器
-request.interceptors.response.use(
-    (res) => {
-        return success(<AxiosApi>res)
-    },
-    (error) => {
-        return Promise.reject(error)
-    }
-);
+request.interceptors.response.use(success, error);
 
 //返回处理
-function success(res: AxiosApi): object | void {
+function success(res: any): object | void {
     switch (res.data.code) {
         case 200://成功
             if (res.config.showTips && res.config.customTipsSwitch) {
@@ -97,4 +88,28 @@ function success(res: AxiosApi): object | void {
         default:
             break;
     }
+}
+
+function error(error: any) {
+    const status = error.response && error.response.status; // 捕获错误状态码
+    if (status == 500) {
+        ElMessage({
+            message: '网络错误',
+            type: 'error',
+            showClose: false,
+        });
+    } else {
+        ElMessage({
+            message: error,
+            type: 'error',
+            showClose: false,
+        });
+    }
+    return Promise.reject(error);
+}
+
+function withToken(config: any) {
+    config.headers.Authorization = 'Bearer ' + tokenStore().get()
+    config.headers.language = configStore().language
+    return config;
 }

@@ -2,23 +2,24 @@
   <div class="login">
     <div class="tittle">
       <div class="tittle-main">Noplin</div>
-      <div>诺普林笔记</div>
+      <div>{{ $t('login.text.secondTitle') }}</div>
     </div>
     <div class="form">
       <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules">
         <el-form-item prop="username">
-          <el-input v-model="loginForm.username" placeholder="请输入用户名" prefix-icon="Avatar">
+          <el-input v-model="loginForm.username" :placeholder="$t('login.form.enterEmail')" prefix-icon="Avatar">
           </el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input v-model="loginForm.password" placeholder="请输入密码" prefix-icon="Lock" show-password type="password"
+          <el-input v-model="loginForm.password" :placeholder="$t('login.form.enterPassword')" prefix-icon="Lock"
+                    show-password type="password"
           >
           </el-input>
         </el-form-item>
         <el-form-item>
           <el-button :loading="loading" class="button" type="success"
                      @keyup.enter.native="handleLogin(loginFormRef)" @click.native="handleLogin(loginFormRef)">
-            登录
+            {{ $t('login.button.login') }}
           </el-button>
         </el-form-item>
       </el-form>
@@ -30,11 +31,14 @@
 <script lang="ts" setup>
 import {reactive, ref} from 'vue'
 import {login} from "@/api/auth";
-import {validUsername} from "@/utils/validator";
+import {validPassword, validUsername} from "@/utils/validator";
 import {tokenStore} from "@/stores/token-store";
 import {FormInstance} from "element-plus";
 import router from "@/router/index";
+import {LoginApi} from "@/interface/auth-interface";
+import i18n from "@/utils/i18n";
 
+const {t} = i18n.global;
 // 响应式状态
 const loginFormRef = ref<FormInstance>()
 const loginForm = reactive({
@@ -42,19 +46,23 @@ const loginForm = reactive({
   password: ""
 })
 const loading = ref(false)
-
 //验证用户名
 const validateUsername = (rule: any, value: any, callback: any) => {
   if (!validUsername(value)) {
-    callback(new Error('Please enter the correct user name'))
+    callback(new Error(t('login.error.emptyEmail')))
   } else {
     callback()
   }
 }
 //验证密码
-const validatePassword = (rule: any, value: string | any[], callback: any) => {
+const validatePassword = (rule: any, value: string, callback: any) => {
+  if (!validPassword(value)) {
+    callback(new Error(t('login.error.emptyEmail')))
+  } else {
+    callback()
+  }
   if (value.length < 6) {
-    callback(new Error('The password can not be less than 6 digits'))
+    callback(new Error(t('login.error.shortPassword')))
   } else {
     callback()
   }
@@ -73,9 +81,13 @@ const handleLogin = (ElForm: FormInstance) => {
           loading.value = true
           login(loginForm).then(
               (res: LoginApi | undefined) => {
-                if (res == undefined) return
-                tokenStore().set(res.access_token);
-                router.push({name: "home"})
+                if (res != undefined) {
+                  res.access_token != undefined && tokenStore().set(res.access_token);
+                  router.push({name: "home"})
+                }
+              }
+          ).finally(
+              () => {
                 loading.value = false
               }
           )

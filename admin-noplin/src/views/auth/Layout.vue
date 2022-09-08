@@ -8,12 +8,14 @@ import ChangeLanguage from './ChangeLanguage.vue';</script>
       <el-aside>
         <img alt="noplin" class="img-box" src="@/assets/logo.png"/>
       </el-aside>
-      <el-main>
-        <Login/>
-      </el-main>
-      <el-footer>
-        <ChangeLanguage/>
-      </el-footer>
+      <el-container>
+        <el-main>
+          <Login/>
+        </el-main>
+        <el-footer>
+          <ChangeLanguage/>
+        </el-footer>
+      </el-container>
     </el-container>
   </div>
 </template>

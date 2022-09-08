@@ -1,4 +1,4 @@
-interface LoginApi {
+export interface LoginApi {
     access_token: string
     config: object
 }

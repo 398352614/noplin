@@ -4,7 +4,10 @@ export function isExternal(path: string): boolean {
 
 export function validUsername(str: string): boolean {
     return str !== '';
+}
 
+export function validPassword(str: string): boolean {
+    return str !== '';
 }
 
 export function validURL(url: string): boolean {
